@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Монохромный силуэт карты с меткой для тем Android 13+.
+     Система красит сама, поэтому все формы одним цветом — важен только силуэт. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path
+        android:pathData="M28.7,34.4 L45.6,29 L62.4,34.4 L79.3,29 L79.3,73.6 L62.4,79 L45.6,73.6 L28.7,79 Z"
+        android:fillColor="#D9C69C" />
+
+    <path
+        android:pathData="M48.3,50.6 L59.7,50.6 L54,63.5 Z"
+        android:fillColor="#D9C69C" />
+    <path
+        android:pathData="M46.9,48.6 a7.1,7.1 0 1,0 14.2,0 a7.1,7.1 0 1,0 -14.2,0"
+        android:fillColor="#D9C69C" />
+</vector>

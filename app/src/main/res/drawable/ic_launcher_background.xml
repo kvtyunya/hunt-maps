@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Фон иконки: тёплый почти-чёрный с мягким свечением к центру —
+     как радиальный градиент из design/logo/icon-compass.svg. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path android:pathData="M0,0 L108,0 L108,108 L0,108 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="radial"
+                android:centerX="54"
+                android:centerY="45.4"
+                android:gradientRadius="84"
+                android:startColor="#1E1813"
+                android:centerColor="#171310"
+                android:endColor="#0C0908" />
+        </aapt:attr>
+    </path>
+</vector>

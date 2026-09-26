@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Иконка приложения: «Сложенная карта» — старая карта с маршрутом
+     и кровавой меткой. Концепт design/logo/icon-map.svg, выбран 26.09.2026.
+     Координаты пересчитаны из поля 512 в 108dp (масштаб 0.8, чтобы углы карты
+     не срезались круглой маской). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Полотно карты с заломами -->
+    <path
+        android:pathData="M28.7,34.4 L45.6,29 L62.4,34.4 L79.3,29 L79.3,73.6 L62.4,79 L45.6,73.6 L28.7,79 Z"
+        android:fillColor="#D9C69C" />
+
+    <!-- Тени на сгибах -->
+    <path
+        android:pathData="M28.7,34.4 L45.6,29 L45.6,73.6 L28.7,79 Z"
+        android:fillColor="#0F0C09"
+        android:fillAlpha="0.16" />
+    <path
+        android:pathData="M62.4,34.4 L79.3,29 L79.3,73.6 L62.4,79 Z"
+        android:fillColor="#0F0C09"
+        android:fillAlpha="0.16" />
+
+    <!-- Пунктирный маршрут к метке (чёрточки — сегменты, т.к. векторный
+         drawable не умеет штрихпунктир) -->
+    <path
+        android:pathData="M36.1,70.2 L40.4,64.3 M42.9,62.6 L47.7,60.3 M49.6,59.4 L51.3,58.4"
+        android:strokeColor="#8A7040"
+        android:strokeAlpha="0.65"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+
+    <!-- Кровавая метка -->
+    <path
+        android:pathData="M48.3,50.6 L59.7,50.6 L54,63.5 Z"
+        android:fillColor="#B32A1C" />
+    <path
+        android:pathData="M46.9,48.6 a7.1,7.1 0 1,0 14.2,0 a7.1,7.1 0 1,0 -14.2,0"
+        android:fillColor="#B32A1C" />
+    <path
+        android:pathData="M51.5,48.6 a2.5,2.5 0 1,0 5,0 a2.5,2.5 0 1,0 -5,0"
+        android:fillColor="#171310" />
+</vector>

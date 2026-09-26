@@ -1,0 +1,5 @@
+<resources>
+    <!-- Фон приложения: используется и в теме, и как цвет запуска (чтобы не мигало белым) -->
+    <color name="app_background">#0F1115</color>
+    <color name="launcher_background">#171310</color>
+</resources>

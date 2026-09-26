@@ -1,0 +1,28 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/app/build
+/captures
+.externalNativeBuild
+.cxx
+.kotlin
+.vscode
+.zcode/
+.zcodeignore
+
+# Личные инструменты и черновики — не часть приложения,
+# остаются только на этом компьютере и на GitHub не попадают.
+# Исключение: coordinates.html — помощник расстановки точек,
+# он упомянут в README и нужен тем, кто скачает проект.
+/tools/*
+!/tools/coordinates.html
+/design
+/check_photos.ps1
+/check_state.ps1
+
+# Ключи подписи APK (никогда не выкладывать, если появятся)
+*.jks
+*.keystore
