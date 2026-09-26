@@ -18,7 +18,7 @@ data class LootPoint(
     val x: Float,
     val y: Float,
     val note: String = "", // подписка при нажатии на точку, например «У церкви»
-    val photo: String? = null // имя файла фото из app/src/main/assets/photos/ (например, "kasca_1.jpg")
+    val photo: String? = null // имя файла фото из app/src/main/assets/photos/ (например, "kasca_1.webp")
 )
 
 /**
