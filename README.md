@@ -9,7 +9,7 @@
 
 ## Скачать
 
-Готовый APK лежит в разделе [Releases](https://github.com/ВАШ_АККАУНТ/hunt-maps/releases):
+Готовый APK лежит в разделе [Releases](https://github.com/kvtyunya/hunt-maps/releases):
 скачайте файл APK из последнего релиза, откройте его на телефоне и разрешите
 установку — приложение не из Google Play, поэтому Android попросит подтвердить
 установку вручную, это нормально.
