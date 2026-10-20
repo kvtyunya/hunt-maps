@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.Icon
@@ -40,6 +39,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.huntmaps.ui.components.NavigationBackIcon
 import com.huntmaps.ui.components.CircleIconButton
 import com.huntmaps.ui.components.fixHangingPrepositions
 import com.huntmaps.ui.theme.AccentGold
@@ -100,7 +100,7 @@ fun AboutScreen(onBack: () -> Unit) {
                 .padding(horizontal = 12.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            CircleIconButton(Icons.AutoMirrored.Outlined.ArrowBack, "Назад", onClick = onBack)
+            CircleIconButton(NavigationBackIcon, "Назад", onClick = onBack)
             Spacer(Modifier.width(12.dp))
             Text(
                 text = "О ПРИЛОЖЕНИИ",

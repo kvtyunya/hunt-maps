@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Монохромный силуэт карты с меткой для тем Android 13+.
-     Система красит сама, поэтому все формы одним цветом — важен только силуэт. -->
+<!-- Тематический значок Android 13+: цвет задаёт система,
+     прозрачные просветы сохраняют сгибы карты и отверстие метки. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-
     <path
-        android:pathData="M28.7,34.4 L45.6,29 L62.4,34.4 L79.3,29 L79.3,73.6 L62.4,79 L45.6,73.6 L28.7,79 Z"
-        android:fillColor="#D9C69C" />
-
+        android:pathData="M30,39 L46,34 L62,39 L78,34 L78,69 L62,74 L46,69 L30,74 Z M46,34 L46,69 M62,39 L62,74"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2.5"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round" />
     <path
-        android:pathData="M48.3,50.6 L59.7,50.6 L54,63.5 Z"
-        android:fillColor="#D9C69C" />
-    <path
-        android:pathData="M46.9,48.6 a7.1,7.1 0 1,0 14.2,0 a7.1,7.1 0 1,0 -14.2,0"
-        android:fillColor="#D9C69C" />
+        android:pathData="M54,38 C48.5,38 44.5,42.1 44.5,47.2 C44.5,53.6 54,64 54,64 C54,64 63.5,53.6 63.5,47.2 C63.5,42.1 59.5,38 54,38 Z M50.7,47.2 a3.3,3.3 0,1 0,6.6 0 a3.3,3.3 0,1 0,-6.6 0"
+        android:fillColor="#FFFFFF"
+        android:fillType="evenOdd" />
 </vector>

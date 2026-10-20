@@ -17,15 +17,17 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,11 +41,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.huntmaps.R
 import com.huntmaps.data.GameMap
 import com.huntmaps.data.MapData
+import com.huntmaps.ui.components.NavigationForwardIcon
 import com.huntmaps.ui.components.CircleIconButton
-import com.huntmaps.ui.components.markerLabel
+import com.huntmaps.ui.components.pointsLabel
 import com.huntmaps.ui.theme.AccentGold
 import com.huntmaps.ui.theme.BgBase
 import com.huntmaps.ui.theme.Outline
@@ -52,7 +58,8 @@ import com.huntmaps.ui.theme.TextSecondary
 
 /*
  * ЭКРАН 1. Выбор карты: вертикальный список локаций, как в навигационных
- * приложениях — каждая карточка на всю ширину с картой-превью.
+ * приложениях — каждая карточка на всю ширину с пейзажной обложкой.
+ * Обложки декоративные: изображение самой игровой карты не заменяется.
  * В шапке — сердечко: ведёт на экран «О приложении» (версия, обратная
  * связь, поддержка разработчика).
  */
@@ -71,42 +78,52 @@ fun HomeScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 12.dp, top = 24.dp, bottom = 20.dp),
+                .padding(start = 20.dp, end = 14.dp, top = 20.dp, bottom = 18.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(Modifier.weight(1f)) {
                 Text(
                     text = "HUNT: SHOWDOWN 1896",
                     style = MaterialTheme.typography.labelSmall,
-                    color = AccentGold
+                    color = AccentGold.copy(alpha = 0.9f)
                 )
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(6.dp))
                 Text(
-                    text = "КАРТЫ",
+                    text = "Карты",
                     style = MaterialTheme.typography.headlineMedium,
                     color = TextPrimary
                 )
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(2.dp))
                 Text(
-                    text = "Выберите локацию",
+                    text = "Выберите территорию",
                     style = MaterialTheme.typography.bodyMedium,
                     color = TextSecondary
                 )
             }
             CircleIconButton(
-                icon = Icons.Outlined.Favorite,
+                icon = Icons.Outlined.FavoriteBorder,
                 contentDescription = "О приложении",
-                onClick = onOpenAbout
+                onClick = onOpenAbout,
+                modifier = Modifier.align(Alignment.Top).padding(top = 2.dp)
             )
         }
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 32.dp),
-            verticalArrangement = Arrangement.spacedBy(14.dp)
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(MapData.maps, key = { it.id }) { map ->
                 MapCard(map = map, onClick = { onMapSelected(map.id) })
+            }
+            item {
+                Text(
+                    text = "Все карты доступны офлайн",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextSecondary,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth().navigationBarsPadding().padding(top = 4.dp)
+                )
             }
         }
     }
@@ -125,13 +142,14 @@ private fun MapCard(map: GameMap, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(2.1f)
+            .heightIn(min = 138.dp)
+            .aspectRatio(2.5f)
             .graphicsLayer {
                 scaleX = scale
                 scaleY = scale
             }
             .clip(RoundedCornerShape(12.dp))
-            .border(1.dp, Outline.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
+            .border(1.dp, Outline.copy(alpha = 0.8f), RoundedCornerShape(12.dp))
             .clickable(
                 interactionSource = interaction,
                 indication = null,
@@ -139,8 +157,8 @@ private fun MapCard(map: GameMap, onClick: () -> Unit) {
             )
     ) {
         Image(
-            painter = painterResource(map.imageRes),
-            contentDescription = map.name,
+            painter = painterResource(coverFor(map)),
+            contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
@@ -150,35 +168,46 @@ private fun MapCard(map: GameMap, onClick: () -> Unit) {
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
-                        0.4f to Color.Transparent,
-                        1f to Color(0xE614110C)
+                        0f to Color.Transparent,
+                        0.25f to Color(0x10111210),
+                        1f to Color(0xF2111210)
                     )
                 )
         )
-        Column(
+        Row(
             Modifier
                 .align(Alignment.BottomStart)
-                .padding(start = 16.dp, end = 16.dp, bottom = 14.dp)
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, bottom = 14.dp),
+            verticalAlignment = Alignment.Bottom
         ) {
-            // Золотая линия с круглыми концами — в цвет надписи HUNT: SHOWDOWN 1896
-            Box(
-                Modifier
-                    .padding(bottom = 7.dp)
-                    .size(width = 30.dp, height = 2.5.dp)
-                    .clip(CircleShape)
-                    .background(AccentGold)
-            )
-            Text(
-                text = map.name,
-                style = MaterialTheme.typography.titleMedium,
-                color = TextPrimary
-            )
-            Spacer(Modifier.height(2.dp))
-            Text(
-                text = markerLabel(map.points.size),
-                style = MaterialTheme.typography.bodySmall,
-                color = TextSecondary
+            Column(Modifier.weight(1f).padding(end = 12.dp)) {
+                Text(
+                    text = map.name,
+                    style = MaterialTheme.typography.titleMedium.copy(fontSize = 25.sp, lineHeight = 27.sp),
+                    color = TextPrimary
+                )
+                Spacer(Modifier.height(2.dp))
+                Text(
+                    text = pointsLabel(map.points.size),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextPrimary.copy(alpha = 0.85f)
+                )
+            }
+            Icon(
+                imageVector = NavigationForwardIcon,
+                contentDescription = null,
+                tint = TextPrimary,
+                modifier = Modifier.padding(bottom = 4.dp).size(22.dp)
             )
         }
     }
+}
+
+private fun coverFor(map: GameMap): Int = when (map.id) {
+    "stillwater" -> R.drawable.cover_stillwater
+    "lawson" -> R.drawable.cover_lawson
+    "mammon" -> R.drawable.cover_mammon
+    "desalle" -> R.drawable.cover_desalle
+    else -> map.imageRes
 }

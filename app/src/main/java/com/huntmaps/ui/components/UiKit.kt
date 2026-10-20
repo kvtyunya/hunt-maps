@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -19,14 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.util.lerp
 import com.huntmaps.data.LootType
 import com.huntmaps.ui.theme.AccentGold
 import com.huntmaps.ui.theme.BgSurface
@@ -34,8 +29,8 @@ import com.huntmaps.ui.theme.Ink
 import com.huntmaps.ui.theme.TextPrimary
 
 /**
- * Маркер в стиле игровых карт: тёмная подушечка, золотое пунктирное
- * кольцо и костяной значок внутри. У выбранного маркера кольцо сплошное.
+ * Маркер в стиле игровых карт: тёмная подушечка, тонкое латунное
+ * кольцо и костяной значок внутри. Выбор подчёркнут более толстой линией.
  */
 @Composable
 fun MarkerPad(
@@ -64,12 +59,7 @@ fun MarkerPad(
                     color = AccentGold.copy(alpha = 0.85f),
                     radius = r - 1.dp.toPx(),
                     center = c,
-                    style = Stroke(
-                        width = 1.2.dp.toPx(),
-                        pathEffect = PathEffect.dashPathEffect(
-                            floatArrayOf(5.dp.toPx(), 4.dp.toPx())
-                        )
-                    )
+                    style = Stroke(width = 1.dp.toPx())
                 )
             }
         }
@@ -109,8 +99,8 @@ fun TypeBadge(
 private val BadgeRed = Color(0xFFA92237)
 
 /**
- * Квадратная кнопка в стиле сайта: прямые углы, тонкая костяная рамка.
- * Видимая кнопка — 42.dp (как задумано), но зона касания — 48.dp:
+ * Круглая графитовая кнопка с тонкой рамкой.
+ * Видимая кнопка — 42.dp, но зона касания — 48.dp:
  * минимум Android, чтобы не промахиваться на бегу и в перчатке.
  * Лишнее поле невидимо и продолжается вокруг кнопки.
  * Если showBadge — крупный кружок налегает на верхний угол кнопки
@@ -142,9 +132,9 @@ fun CircleIconButton(
             Box(
                 Modifier
                     .size(42.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(BgSurface.copy(alpha = 0.85f))
-                    .border(1.dp, TextPrimary.copy(alpha = 0.3f), RoundedCornerShape(12.dp)),
+                    .clip(CircleShape)
+                    .background(BgSurface.copy(alpha = 0.95f))
+                    .border(1.dp, TextPrimary.copy(alpha = 0.22f), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -159,10 +149,10 @@ fun CircleIconButton(
             Box(
                 Modifier
                     .align(Alignment.TopEnd)
-                    // сдвиг от угла контейнера 48.dp, чтобы точка прижималась
-                    // к углу видимой кнопки, как и раньше
-                    .offset(x = (-1).dp, y = (-1).dp)
-                    .size(15.dp)
+                    // Центр бейджа лежит на верхней правой дуге кнопки:
+                    // кружок наполовину перекрывает её рамку.
+                    .offset(x = (-4).dp, y = 4.dp)
+                    .size(10.dp)
                     .background(badgeColor, CircleShape)
             )
         }

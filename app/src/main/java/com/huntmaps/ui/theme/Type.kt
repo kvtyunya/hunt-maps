@@ -16,6 +16,8 @@ import com.huntmaps.R
  * лицензия OFL), ближайший бесплатный родственник заголовочного шрифта
  * официального сайта. Заголовки и названия карт — Cormorant,
  * обычный текст — системный sans (Roboto).
+ * lnum — цифры одинаковой высоты на общей базовой линии;
+ * tnum — одинаковая ширина цифр в счётчиках и номерах версий.
  */
 val CormorantFamily = FontFamily(
     Font(
@@ -31,32 +33,40 @@ val CormorantFamily = FontFamily(
 )
 
 val HuntTypography = Typography(
-    headlineMedium = TextStyle( // большой заголовок экрана («КАРТЫ»)
+    headlineMedium = TextStyle( // главный заголовок экрана
+        fontFeatureSettings = "'lnum' 1, 'tnum' 1",
         fontFamily = CormorantFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 36.sp,
-        letterSpacing = 2.sp
+        fontSize = 44.sp,
+        lineHeight = 48.sp,
+        letterSpacing = 0.sp
     ),
     titleLarge = TextStyle( // заголовки экранов и панелей
+        fontFeatureSettings = "'lnum' 1, 'tnum' 1",
         fontFamily = CormorantFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 24.sp,
-        letterSpacing = 1.5.sp
+        letterSpacing = 0.3.sp
     ),
     titleMedium = TextStyle( // названия карточек и строк
+        fontFeatureSettings = "'lnum' 1, 'tnum' 1",
         fontFamily = CormorantFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 18.sp
+        fontSize = 22.sp,
+        lineHeight = 25.sp
     ),
     bodyMedium = TextStyle(
+        fontFeatureSettings = "'lnum' 1, 'tnum' 1",
         fontSize = 14.sp,
         lineHeight = 20.sp
     ),
     bodySmall = TextStyle(
+        fontFeatureSettings = "'lnum' 1, 'tnum' 1",
         fontSize = 12.sp,
         lineHeight = 17.sp
     ),
     labelSmall = TextStyle( // «надзаголовки» вроде HUNT: SHOWDOWN 1896
+        fontFeatureSettings = "'lnum' 1, 'tnum' 1",
         fontWeight = FontWeight.Medium,
         fontSize = 11.sp,
         letterSpacing = 2.sp

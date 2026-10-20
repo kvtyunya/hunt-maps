@@ -33,11 +33,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material.icons.automirrored.outlined.Label
 import androidx.compose.material.icons.outlined.CenterFocusWeak
 import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.OpenInFull
 import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -61,7 +59,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.withTransform
@@ -87,9 +84,11 @@ import androidx.compose.ui.unit.sp
 import com.huntmaps.data.LootPoint
 import com.huntmaps.data.LootType
 import com.huntmaps.data.MapData
+import com.huntmaps.ui.components.NavigationBackIcon
+import com.huntmaps.ui.components.NavigationInfoIcon
+import com.huntmaps.ui.components.NavigationLocationsIcon
 import com.huntmaps.ui.components.CircleIconButton
 import com.huntmaps.ui.theme.AccentGold
-import com.huntmaps.ui.theme.AccentRed
 import com.huntmaps.ui.theme.BgBase
 import com.huntmaps.ui.theme.BgSurface
 import com.huntmaps.ui.theme.Ink
@@ -356,7 +355,6 @@ fun MapViewScreen(
             val zoomT = ((scale - 1.3f) / 2.3f).coerceIn(0f, 1f)
             val padPx = lerp(9.dp.toPx(), 26.dp.toPx(), zoomT)
             val radius = padPx / 2f
-            val dash = PathEffect.dashPathEffect(floatArrayOf(5.dp.toPx(), 4.dp.toPx()))
             val sel = selectedPointIndex
 
             // — «Веер»: маркеры, наехавшие друг на друга, расходятся в стороны —
@@ -436,13 +434,15 @@ fun MapViewScreen(
                         AccentGold.copy(alpha = 0.85f * zoomT),
                         r - 1.dp.toPx() * zoomT,
                         c,
-                        style = Stroke(width = 1.2.dp.toPx(), pathEffect = dash)
+                        style = Stroke(width = 1.dp.toPx())
                     )
                 }
 
                 // значок проявляется при приближении — приглушённый, не кричит
                 if (zoomT > 0.3f) {
-                    val glyph = r * 0.96f
+                    // Крупнее сам рисунок: около 17.5dp внутри прежнего маркера 26dp.
+                    // Радиус, координаты и зоны нажатия остаются прежними.
+                    val glyph = r * 1.35f
                     val glyphAlpha = ((zoomT - 0.3f) / 0.7f).coerceIn(0f, 1f) * 0.8f
                     with(glyphPainters.getValue(point.type)) {
                         withTransform({ translate(cx - glyph / 2f, cy - glyph / 2f) }) {
@@ -487,28 +487,28 @@ fun MapViewScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .statusBarsPadding()
-                    .padding(horizontal = 12.dp, vertical = 10.dp),
+                    .padding(horizontal = 10.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                CircleIconButton(Icons.AutoMirrored.Outlined.ArrowBack, "Назад", onClick = onBack)
-                Spacer(Modifier.width(12.dp))
+                CircleIconButton(NavigationBackIcon, "Назад", onClick = onBack)
+                Spacer(Modifier.width(8.dp))
                 Text(
                     text = map.name,
                     style = MaterialTheme.typography.titleMedium,
                     color = TextPrimary,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f).padding(end = 4.dp)
                 )
-                CircleIconButton(Icons.Outlined.Info, "Легенда", onClick = onOpenLegend)
-                Spacer(Modifier.width(8.dp))
+                CircleIconButton(NavigationInfoIcon, "Легенда", onClick = onOpenLegend)
+                Spacer(Modifier.width(2.dp))
                 CircleIconButton(
-                    icon = Icons.AutoMirrored.Outlined.Label,
+                    icon = NavigationLocationsIcon,
                     contentDescription = if (showLocations) "Скрыть названия локаций" else "Показать названия локаций",
                     onClick = { showLocations = !showLocations },
                     showBadge = showLocations,
                     // золото = «функция включена», как у переключателей в фильтре
                     badgeColor = AccentGold
                 )
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(2.dp))
                 CircleIconButton(
                     icon = Icons.Outlined.Tune,
                     contentDescription = "Фильтр",
@@ -551,9 +551,9 @@ fun MapViewScreen(
                 Box(
                     Modifier
                         .size(46.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(AccentRed)
-                        .border(1.dp, Ink, RoundedCornerShape(12.dp)),
+                        .clip(CircleShape)
+                        .background(BgSurface.copy(alpha = 0.95f))
+                        .border(1.dp, TextPrimary.copy(alpha = 0.22f), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -614,6 +614,7 @@ fun MapViewScreen(
         selPoint?.photo?.let { photoName ->
             PhotoCard(
                 photoName = photoName,
+                title = selPoint.type.label,
                 onClick = { fullPhoto = true },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -691,7 +692,7 @@ private fun PointTooltip(point: LootPoint, modifier: Modifier = Modifier) {
                     translationY = -size.height - 22.dp.toPx()
                 }
                 .clip(RoundedCornerShape(10.dp))
-                .background(Color(0xE615181D))
+                .background(BgSurface.copy(alpha = 0.97f))
                 .border(1.dp, Outline, RoundedCornerShape(10.dp))
                 .padding(horizontal = 10.dp, vertical = 6.dp)
         )
@@ -731,25 +732,57 @@ private fun rememberAssetBitmap(name: String, maxDim: Int): ImageBitmap? {
  * Карточка с фото выбранной кассы (внизу экрана). Тап по ней — на весь экран.
  */
 @Composable
-private fun PhotoCard(photoName: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+private fun PhotoCard(
+    photoName: String,
+    title: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val bmp = rememberAssetBitmap(photoName, maxDim = 1400)
     if (bmp == null) return
-    Image(
-        bitmap = bmp,
-        contentDescription = "Фото места",
-        contentScale = ContentScale.Crop,
+    Row(
         modifier = modifier
-            .width(230.dp)
-            .height(120.dp)
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .background(BgSurface.copy(alpha = 0.97f))
-            .border(1.dp, AccentGold.copy(alpha = 0.55f), RoundedCornerShape(12.dp))
+            .border(1.dp, Outline, RoundedCornerShape(12.dp))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
                 onClick = onClick
             )
-    )
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            bitmap = bmp,
+            contentDescription = "Фото места",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(width = 108.dp, height = 84.dp)
+                .clip(RoundedCornerShape(8.dp))
+        )
+        Column(Modifier.weight(1f).padding(horizontal = 12.dp)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium,
+                color = TextPrimary
+            )
+            Spacer(Modifier.height(4.dp))
+            Text(
+                text = "Нажмите, чтобы открыть фото",
+                style = MaterialTheme.typography.bodySmall,
+                color = TextSecondary
+            )
+        }
+        Icon(
+            imageVector = Icons.Outlined.OpenInFull,
+            contentDescription = null,
+            tint = AccentGold,
+            modifier = Modifier.padding(end = 4.dp).size(18.dp)
+        )
+    }
 }
 
 /**

@@ -19,7 +19,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.huntmaps.data.LootType
+import com.huntmaps.ui.components.NavigationBackIcon
 import com.huntmaps.ui.components.CircleIconButton
 import com.huntmaps.ui.components.TypeBadge
 import com.huntmaps.ui.components.fixHangingPrepositions
@@ -58,7 +58,7 @@ fun LegendScreen(onBack: () -> Unit) {
                 .padding(horizontal = 12.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            CircleIconButton(Icons.AutoMirrored.Outlined.ArrowBack, "Назад", onClick = onBack)
+            CircleIconButton(NavigationBackIcon, "Назад", onClick = onBack)
             Spacer(Modifier.width(12.dp))
             Text(
                 text = "ЛЕГЕНДА",

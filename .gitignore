@@ -23,3 +23,20 @@
 # Ключи подписи APK (никогда не выкладывать, если появятся)
 *.jks
 *.keystore
+
+# Private design work and generated presentation material stay local.
+/docs/
+/portfolio/
+/screenshots/
+/topbar_zoom.png
+/*.png
+/*.jpg
+/*.jpeg
+/*.webp
+*.zip
+*.apk
+*.aab
+__pycache__/
+*.pyc
+.env
+.env.*
